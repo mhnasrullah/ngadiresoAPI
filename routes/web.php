@@ -20,5 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/api/berita/img/{id}',[beritaCon::class,'showImage']);
 Route::get('/api/berita',[beritaCon::class,'index']);
+Route::get('/api/berita/{id}',[beritaCon::class,'show']);
 Route::post('/api/berita',[beritaCon::class,'store'])->middleware(VerifyCsrfToken::class);
+Route::post('/api/berita/{id}',[beritaCon::class,'update'])->middleware(VerifyCsrfToken::class);
+Route::delete('/api/berita/{id}',[beritaCon::class,'destroy']);

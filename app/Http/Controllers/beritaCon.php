@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BeritaSrc;
 use App\Models\Berita;
+use Carbon\Carbon;
 
 class beritaCon extends Controller
 {
+
+    public function showImage($id){
+        $data = Berita::find($id);
+        // dd($data['foto']);
+        return view('tes',$data);
+        // return redirect()->to('storage/'.$data['foto']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +28,7 @@ class beritaCon extends Controller
         $berita = Berita::all();
         return new BeritaSrc(true,"Semua Berita",$berita);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -38,25 +47,33 @@ class beritaCon extends Controller
      */
     public function store(Request $r)
     {
-        $file = $r->file('foto');
-        $filename = $r->slug.'.'.$file->extension();
-        $file->storeAs('public/berita',$filename);
-        
-        $show = Berita::where('slug', $r->slug)->first();
+        $val = Validator::make($r->all(),[
+            'slug' => 'required|unique:beritas',
+            'judul' => 'required',
+            'text' => 'required',
+            'foto' => 'required|mimes:jpg,png,jpeg',
+        ],
+        $message = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah digunakan',
+            'mimes' => 'format :attribute harus berupa jpg,png,jpeg',
+        ]);
 
-        if(!$show){
-            $url = Storage::url($filename);
-            $berita = Berita::create([
-                'slug' => $r->slug,
-                'judul' => $r->judul,
-                'text' => $r->text,
-                'foto' => $url
-            ]);
-            return new BeritaSrc(true,"Berita berhasil ditambahkan!",$berita);
-        }else{
-            return new BeritaSrc(false,"Ganti Slug dong!",['error']);
+        if($val->fails()){
+            return new BeritaSrc(false,"erroe",$val->errors());
         }
 
+        $file = $r->file('foto');
+        $filename = time().'.'.$file->extension();
+        
+        $path = $file->storeAs('public/berita',$filename);
+        $berita = Berita::create([
+            'slug' => $r->slug,
+            'judul' => $r->judul,
+            'text' => $r->text,
+            'foto' => "/storage/berita/$filename"
+        ]);
+        return new BeritaSrc(true,"Berita berhasil ditambahkan!",$berita);
     }
 
     /**
@@ -67,7 +84,8 @@ class beritaCon extends Controller
      */
     public function show($id)
     {
-        //
+        $berita = Berita::find($id);
+        return new BeritaSrc(true,"Semua Berita",$berita);
     }
 
     /**
@@ -88,11 +106,54 @@ class beritaCon extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $r, $id)
     {
-        //
+
+        $rules = [
+            'judul' => 'required',
+            'text' => 'required',
+            'foto' => 'mimes:jpg,png,jpeg',
+        ];
+        
+        $last = Berita::where('id', $id)->first();
+        if($r->slug != $last->slug){
+            $rules['slug'] = 'required|unique:beritas';
+        }else{
+            $rules['slug'] = 'required';
+        }
+
+        $val = Validator::make( $r->all(), $rules,
+        $message = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah digunakan',
+            'mimes' => 'format :attribute harus berupa jpg,png,jpeg',
+        ]);
+
+        if($val->fails()){
+            return new BeritaSrc(false,"error",$val->errors());
+        }
+        
+        $fotodir = explode('/',$last['foto']);
+        $foto = end($fotodir);
+        
+        $data = [
+            'judul' => $r->judul,
+            'text' => $r->text
+        ];
+
+        $file = $r->file('foto');
+        if($file != null){
+            Storage::delete('public/berita/'.$foto);
+            $file->storeAs('public/berita/',$foto);
+            
+            $data['foto'] = "/storage/berita/$foto";
+            
+            
+        }
+        return new BeritaSrc(true,"Berita berhasil diubah!",$data);
     }
 
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -101,6 +162,12 @@ class beritaCon extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Berita::find($id);
+        $fotodir = explode('/',$data['foto']);
+        $foto = end($fotodir);
+        
+        Storage::delete('public/berita/'.$foto);
+        $data->delete();
+        return new BeritaSrc(true,"Hapus data berhasil",['success']);
     }
 }
