@@ -135,21 +135,28 @@ class beritaCon extends Controller
         
         $fotodir = explode('/',$last['foto']);
         $foto = end($fotodir);
-        
+        $fotoname = explode('.',$foto);
+
         $data = [
+            'slug' => $r->slug,
             'judul' => $r->judul,
             'text' => $r->text
         ];
 
         $file = $r->file('foto');
+        $filex = $file->extension();
+        $newname = $fotoname[0].'.'.$filex;
+        // dd($newname);
+
         if($file != null){
             Storage::delete('public/berita/'.$foto);
-            $file->storeAs('public/berita/',$foto);
+            $file->storeAs('public/berita/',$newname);
             
-            $data['foto'] = "/storage/berita/$foto";
-            
-            
+            $data['foto'] = "/storage/berita/$newname";
         }
+
+        $last->update($data);
+
         return new BeritaSrc(true,"Berita berhasil diubah!",$data);
     }
 
