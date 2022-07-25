@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\beritaCon;
 use App\Http\Controllers\wisataCon;
 use App\Http\Controllers\imgWisataCon;
+use App\Http\Controllers\faqwisCon;
 use App\Http\Middleware\VerifyCsrfToken;
 
 /*
@@ -38,3 +39,7 @@ Route::get('/api/wisata/{id}/img',[imgWisataCon::class,'index']);
 Route::post('/api/wisata/{id}/img',[imgWisataCon::class,'store']);
 Route::post('/api/wisata/{id}/img/{foto}',[imgWisataCon::class,'update']);
 Route::delete('/api/wisata/{id}/img/{foto}',[imgWisataCon::class,'destroy']);
+
+Route::get('/api/wisata/{id}/faq',[faqwisCon::class,'index']);
+Route::post('/api/wisata/{id}/faq',[faqwisCon::class,'store']);
+Route::delete('/api/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);
