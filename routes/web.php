@@ -6,6 +6,7 @@ use App\Http\Controllers\beritaCon;
 use App\Http\Controllers\wisataCon;
 use App\Http\Controllers\imgWisataCon;
 use App\Http\Controllers\faqwisCon;
+use App\Http\Controllers\authCon;
 use App\Http\Middleware\VerifyCsrfToken;
 
 /*

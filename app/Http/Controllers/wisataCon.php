@@ -123,8 +123,6 @@ class wisataCon extends Controller
         ];
 
         $data = Wisata::find($id);
-        // dd($r->slug);
-        // dd($data['slug']);
         if($r->slug != $data['slug']){
             $rule['slug'] = 'required|unique:wisatas';
         }else{
