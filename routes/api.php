@@ -4,6 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authCon;
 
+use App\Http\Controllers\beritaCon;
+use App\Http\Controllers\wisataCon;
+use App\Http\Controllers\imgWisataCon;
+use App\Http\Controllers\faqwisCon;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +33,29 @@ use App\Http\Controllers\authCon;
 
 // });
 
-Route::post('register', [authCon::class, 'register']);
-Route::post('login', [authCon::class, 'login']);
-Route::post('refresh', [authCon::class, 'refresh']);
-Route::post('user', [authCon::class, 'user']);
-Route::post('logout', [authCon::class, 'logout']);
+// Route::post('register', [authCon::class, 'register']);
+// Route::post('login', [authCon::class, 'login']);
+// Route::post('refresh', [authCon::class, 'refresh']);
+// Route::post('user', [authCon::class, 'user']);
+// Route::post('logout', [authCon::class, 'logout']);
+
+Route::get('/berita',[beritaCon::class,'index']);
+Route::get('/berita/{id}',[beritaCon::class,'show']);
+Route::post('/berita',[beritaCon::class,'store']);
+Route::post('/berita/{id}',[beritaCon::class,'update']);
+Route::delete('/berita/{id}',[beritaCon::class,'destroy']);
+
+Route::get('/wisata',[wisataCon::class,'index']);
+Route::get('/wisata/{id}',[wisataCon::class,'show']);
+Route::post('/wisata',[wisataCon::class,'store']);
+Route::post('/wisata/{id}',[wisataCon::class,'update']);
+Route::delete('/wisata/{id}',[wisataCon::class,'destroy']);
+
+Route::get('/wisata/{id}/img',[imgWisataCon::class,'index']);
+Route::post('/wisata/{id}/img',[imgWisataCon::class,'store']);
+Route::post('/wisata/{id}/img/{foto}',[imgWisataCon::class,'update']);
+Route::delete('/wisata/{id}/img/{foto}',[imgWisataCon::class,'destroy']);
+
+Route::get('/wisata/{id}/faq',[faqwisCon::class,'index']);
+Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
+Route::delete('/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);

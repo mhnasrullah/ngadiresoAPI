@@ -11,8 +11,8 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
-    protected $except = [
-        "http://localhost:8000/api/*",
-        "https://young-anchorage-84624.herokuapp.com/api/*",
-    ];
+    // protected $except = [
+    //     "http://localhost:8000/api/*",
+    //     "https://young-anchorage-84624.herokuapp.com/api/*",
+    // ];
 }
