@@ -110,6 +110,5 @@ class faqwisCon extends Controller
 
         $data->delete();
         return new WisataSrc(true,'faq berhasil dihapus',$data);
-        
     }
 }
