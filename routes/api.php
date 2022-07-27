@@ -40,6 +40,9 @@ use App\Http\Controllers\penyuratanCon;
 // Route::post('user', [authCon::class, 'user']);
 // Route::post('logout', [authCon::class, 'logout']);
 
+Route::middleware(['cors'])->group(function () {
+    
+
 Route::get('/berita',[beritaCon::class,'index']);
 Route::get('/berita/{id}',[beritaCon::class,'show']);
 Route::post('/berita',[beritaCon::class,'store']);  
@@ -65,3 +68,5 @@ Route::delete('/surat/{id}',[penyuratanCon::class,'destroy']);
 Route::get('/wisata/{id}/faq',[faqwisCon::class,'index']);
 Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
 Route::delete('/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);
+
+});
