@@ -8,6 +8,7 @@ use App\Http\Controllers\beritaCon;
 use App\Http\Controllers\wisataCon;
 use App\Http\Controllers\imgWisataCon;
 use App\Http\Controllers\faqwisCon;
+use App\Http\Controllers\penyuratanCon;
 
 
 /*
@@ -41,7 +42,7 @@ use App\Http\Controllers\faqwisCon;
 
 Route::get('/berita',[beritaCon::class,'index']);
 Route::get('/berita/{id}',[beritaCon::class,'show']);
-Route::post('/berita',[beritaCon::class,'store']);
+Route::post('/berita',[beritaCon::class,'store']);  
 Route::post('/berita/{id}',[beritaCon::class,'update']);
 Route::delete('/berita/{id}',[beritaCon::class,'destroy']);
 
@@ -55,6 +56,11 @@ Route::get('/wisata/{id}/img',[imgWisataCon::class,'index']);
 Route::post('/wisata/{id}/img',[imgWisataCon::class,'store']);
 Route::post('/wisata/{id}/img/{foto}',[imgWisataCon::class,'update']);
 Route::delete('/wisata/{id}/img/{foto}',[imgWisataCon::class,'destroy']);
+
+Route::get('/surat',[penyuratanCon::class,'index']);
+Route::post('/surat',[penyuratanCon::class,'store']);
+Route::post('/surat/{id}',[penyuratanCon::class,'update']);
+Route::delete('/surat/{id}',[penyuratanCon::class,'destroy']);
 
 Route::get('/wisata/{id}/faq',[faqwisCon::class,'index']);
 Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
