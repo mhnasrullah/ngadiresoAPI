@@ -68,5 +68,4 @@ Route::delete('/surat/{id}',[penyuratanCon::class,'destroy']);
 Route::get('/wisata/{id}/faq',[faqwisCon::class,'index']);
 Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
 Route::delete('/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);
-
 });
