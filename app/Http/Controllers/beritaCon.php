@@ -143,12 +143,13 @@ class beritaCon extends Controller
             'text' => $r->text
         ];
 
-        $file = $r->file('foto');
-        $filex = $file->extension();
-        $newname = $fotoname[0].'.'.$filex;
         // dd($newname);
-
+        
+        $file = $r->file('foto');
         if($file != null){
+            $filex = $file->extension();
+            $newname = $fotoname[0].'.'.$filex;
+
             Storage::delete('public/berita/'.$foto);
             $file->storeAs('public/berita/',$newname);
             
