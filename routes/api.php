@@ -9,6 +9,7 @@ use App\Http\Controllers\wisataCon;
 use App\Http\Controllers\imgWisataCon;
 use App\Http\Controllers\faqwisCon;
 use App\Http\Controllers\penyuratanCon;
+use App\Http\Controllers\editableCon;
 
 
 /*
@@ -42,7 +43,6 @@ use App\Http\Controllers\penyuratanCon;
 
 Route::middleware(['cors'])->group(function () {
     
-
 Route::get('/berita',[beritaCon::class,'index']);
 Route::get('/berita/{id}',[beritaCon::class,'show']);
 Route::post('/berita',[beritaCon::class,'store']);  
@@ -68,4 +68,7 @@ Route::delete('/surat/{id}',[penyuratanCon::class,'destroy']);
 Route::get('/wisata/{id}/faq',[faqwisCon::class,'index']);
 Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
 Route::delete('/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);
+
+Route::get('/editable/all',[editableCon::class,'getAll']);
+
 });

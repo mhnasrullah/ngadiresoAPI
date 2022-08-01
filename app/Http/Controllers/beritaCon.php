@@ -146,6 +146,7 @@ class beritaCon extends Controller
         // dd($newname);
         
         $file = $r->file('foto');
+        dd($file);
         if($file != null){
             $filex = $file->extension();
             $newname = $fotoname[0].'.'.$filex;
