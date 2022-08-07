@@ -70,6 +70,7 @@ Route::post('/wisata/{id}/faq',[faqwisCon::class,'store']);
 Route::delete('/wisata/{id}/faq/{faq}',[faqwisCon::class,'destroy']);
 
 Route::get('/editable/all',[editableCon::class,'getAll']);
+Route::post('/editable/create',[editableCon::class,'create']);
 
 Route::post('/editable/tentangDesa',[editableCon::class,'updTentangDesa']);
 Route::post('/editable/sambKades',[editableCon::class,'updSamKades']);
@@ -77,8 +78,6 @@ Route::post('/editable/namaKades',[editableCon::class,'updNamaKades']);
 Route::post('/editable/jmlPria',[editableCon::class,'jmlPria']);
 Route::post('/editable/jmlWanita',[editableCon::class,'jmlWanita']);
 Route::post('/editable/jmlPenduduk',[editableCon::class,'jmlPenduduk']);
-
-Route::post('/editable/create',[editableCon::class,'create']);
 Route::post('/editable/jumbotron',[editableCon::class,'updJumbotron']);
 Route::post('/editable/imgTentangDesa',[editableCon::class,'updImgTentangDesa']);
 Route::post('/editable/imgKades',[editableCon::class,'updImgKades']);
